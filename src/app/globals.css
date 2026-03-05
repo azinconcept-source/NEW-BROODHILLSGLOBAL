@@ -1,0 +1,208 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --color-background: #000000;
+  --color-foreground: #ffffff;
+
+  --color-card: #000000;
+  --color-card-foreground: #ffffff;
+
+  --color-popover: #ffffff;
+  --color-popover-foreground: #000000;
+
+  --color-primary: #C8DC0A;
+  --color-primary-foreground: #000000;
+
+  --color-secondary: #000000;
+  --color-secondary-foreground: #ffffff;
+
+  --color-muted: #121212;
+  --color-muted-foreground: #CCCCCC;
+
+  --color-accent: #C8DC0A;
+  --color-accent-foreground: #000000;
+
+  --color-destructive: #ef4444;
+  --color-destructive-foreground: #fafafa;
+
+  --color-border: #6B8C14;
+  --color-input: rgba(107, 140, 20, 0.2);
+  --color-ring: #C8DC0A;
+
+  --color-chart-1: #C8DC0A;
+  --color-chart-2: #000000;
+  --color-chart-3: #ffffff;
+  --color-chart-4: #CCCCCC;
+  --color-chart-5: #121212;
+
+  --color-sidebar: #000000;
+  --color-sidebar-foreground: #ffffff;
+  --color-sidebar-primary: #C8DC0A;
+  --color-sidebar-primary-foreground: #000000;
+  --color-sidebar-accent: #121212;
+  --color-sidebar-accent-foreground: #ffffff;
+  --color-sidebar-border: #6B8C14;
+  --color-sidebar-ring: #C8DC0A;
+
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  --radius-lg: 16px;
+  --radius-md: 12px;
+  --radius-sm: 4px;
+  --radius-full: 100px;
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+}
+
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: #6B8C14;
+  }
+
+  :root {
+    --background: #000000;
+    --foreground: #ffffff;
+    --card: #000000;
+    --card-foreground: #ffffff;
+    --popover: #ffffff;
+    --popover-foreground: #000000;
+    --primary: #C8DC0A;
+    --primary-foreground: #000000;
+    --secondary: #000000;
+    --secondary-foreground: #ffffff;
+    --muted: #121212;
+    --muted-foreground: #CCCCCC;
+    --accent: #C8DC0A;
+    --accent-foreground: #000000;
+    --destructive: #ef4444;
+    --destructive-foreground: #fafafa;
+    --border: #6B8C14;
+    --input: rgba(107, 140, 20, 0.2);
+    --ring: #C8DC0A;
+    --radius: 16px;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    line-height: 1.5;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  h1 {
+    font-size: 48px;
+    line-height: 1.1;
+  }
+
+  h2 {
+    font-size: 32px;
+    line-height: 1.2;
+  }
+
+  h3 {
+    font-size: 18px;
+    line-height: 1.4;
+  }
+
+  p {
+    font-size: 16px;
+    color: var(--foreground);
+  }
+
+  .container {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 2rem;
+    padding-right: 2rem;
+    max-width: 1400px;
+  }
+
+  .font-meta {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+}
+
+@layer base {
+  * {
+    border-color: var(--border);
+  }
+}
+
+@layer utilities {
+  .bg-gradient-card {
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 50%);
+  }
+  
+  .hover-lift {
+    transition: transform 0.2s ease-in-out, filter 0.2s ease-in-out;
+  }
+  
+  .hover-lift:hover {
+    transform: scale(1.02);
+    filter: brightness(1.1);
+  }
+
+  .highlight-component {
+    outline: 2px solid #C8DC0A !important;
+    outline-offset: 4px;
+    position: relative;
+  }
+
+  .highlight-component::after {
+    content: attr(data-component);
+    position: absolute;
+    top: -24px;
+    left: 0;
+    background: #C8DC0A;
+    color: #000000;
+    font-size: 10px;
+    font-weight: bold;
+    padding: 2px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+    z-index: 1001;
+  }
+}

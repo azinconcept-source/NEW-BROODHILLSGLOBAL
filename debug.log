@@ -1,0 +1,57 @@
+2026-03-04T15:38:05.047Z [console][warn] [object Object]
+2026-03-04T15:38:05.205Z [console][error] ./orchids-projects/pink-shrimp/src/components/shared-page-content.tsx:4:1
+Module not found: Can't resolve 'motion/react'
+  2 |
+  3 | import React from "react";
+> 4 | import { motion } from "motion/react";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import Image from "next/image";
+  6 |
+  7 | interface SectionProps {
+
+Import traces:
+  Client Component Browser:
+    ./orchids-projects/pink-shrimp/src/components/shared-page-content.tsx [Client Component Browser]
+    ./orchids-projects/pink-shrimp/src/app/vision/page.tsx [Client Component Browser]
+    ./orchids-projects/pink-shrimp/src/app/vision/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./orchids-projects/pink-shrimp/src/components/shared-page-content.tsx [Client Component SSR]
+    ./orchids-projects/pink-shrimp/src/app/vision/page.tsx [Client Component SSR]
+    ./orchids-projects/pink-shrimp/src/app/vision/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+2026-03-04T15:38:05.231Z [console][warn] [Fast Refresh] rebuilding
+2026-03-04T15:38:34.698Z [console][error] ./orchids-projects/pink-shrimp/src/components/shared-page-content.tsx:4:1
+Module not found: Can't resolve 'motion/react'
+  2 |
+  3 | import React from "react";
+> 4 | import { motion } from "motion/react";
+    | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  5 | import Image from "next/image";
+  6 |
+  7 | interface SectionProps {
+
+Import traces:
+  Client Component Browser:
+    ./orchids-projects/pink-shrimp/src/components/shared-page-content.tsx [Client Component Browser]
+    ./orchids-projects/pink-shrimp/src/app/vision/page.tsx [Client Component Browser]
+    ./orchids-projects/pink-shrimp/src/app/vision/page.tsx [Server Component]
+
+  Client Component SSR:
+    ./orchids-projects/pink-shrimp/src/components/shared-page-content.tsx [Client Component SSR]
+    ./orchids-projects/pink-shrimp/src/app/vision/page.tsx [Client Component SSR]
+    ./orchids-projects/pink-shrimp/src/app/vision/page.tsx [Server Component]
+
+https://nextjs.org/docs/messages/module-not-found
+2026-03-04T15:38:34.750Z [console][warn] [Fast Refresh] rebuilding
+2026-03-04T15:39:03.519Z [console][warn] [Fast Refresh] rebuilding
+2026-03-04T15:39:04.504Z [console][warn] [Fast Refresh] done in 1055ms
+2026-03-04T15:39:05.443Z [console][log] __ORCHIDS_NAVIGATE__ http://localhost:3000/
+2026-03-04T15:38:04.974Z [console][debug] __ORCHIDS_NAVIGATE__ http://localhost:3000/
+2026-03-04T15:38:05.047Z [console][log] {"file":{"fileName":"./orchids-projects/pink-shrimp/src/components/shared-page-content.tsx","location":{"line1":4,"column1":1}}}
+2026-03-04T15:38:05.230Z [console][log] [Fast Refresh] rebuilding
+2026-03-04T15:38:34.750Z [console][log] [Fast Refresh] rebuilding
+2026-03-04T15:39:03.519Z [console][log] [Fast Refresh] rebuilding
+2026-03-04T15:39:04.504Z [console][log] [Fast Refresh] done in 1055ms
+2026-03-04T15:39:05.443Z [console][debug] __ORCHIDS_NAVIGATE__ http://localhost:3000/
