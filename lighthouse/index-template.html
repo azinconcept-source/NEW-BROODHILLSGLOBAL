@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--
+  BroodhillsGlobal — Lighthouse 90+ Optimised HTML Template
+  Targets: Performance 90+, Accessibility 100, Best Practices 100, SEO 100
+-->
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- ═══════════════════════════════════════════════════
+    PERFORMANCE: Resource Hints
+  ════════════════════════════════════════════════════ -->
+  <!-- Preconnect to critical third-party origins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://www.googletagmanager.com">
+
+  <!-- DNS prefetch for secondary origins -->
+  <link rel="dns-prefetch" href="https://www.google-analytics.com">
+  <link rel="dns-prefetch" href="https://cdn.broodhillsglobal.com">
+
+  <!-- Preload LCP image (adjust src to your actual hero image) -->
+  <link rel="preload" as="image" href="/images/hero.webp" fetchpriority="high"
+        imagesrcset="/images/hero-480.webp 480w, /images/hero-960.webp 960w, /images/hero-1440.webp 1440w"
+        imagesizes="100vw">
+
+  <!-- Preload critical CSS (if not inlining it) -->
+  <!-- <link rel="preload" as="style" href="/css/critical.css"> -->
+
+  <!-- Preload main font subset -->
+  <link rel="preload" as="font" type="font/woff2"
+        href="/fonts/brand-font-subset.woff2" crossorigin="anonymous">
+
+  <!-- ═══════════════════════════════════════════════════
+    SEO: Core Meta Tags
+  ════════════════════════════════════════════════════ -->
+  <title>BroodhillsGlobal — [Page Title Here]</title>
+  <meta name="description" content="[Compelling 150-160 char description for this page. Include primary keyword naturally.]">
+  <meta name="keywords" content="broodhillsglobal, [keyword1], [keyword2]">
+  <meta name="author" content="BroodhillsGlobal">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.broodhillsglobal.com/[this-page]">
+
+  <!-- ═══════════════════════════════════════════════════
+    SEO: Open Graph (Social Sharing)
+  ════════════════════════════════════════════════════ -->
+  <meta property="og:type"        content="website">
+  <meta property="og:url"         content="https://www.broodhillsglobal.com/[this-page]">
+  <meta property="og:title"       content="BroodhillsGlobal — [Page Title]">
+  <meta property="og:description" content="[Same as meta description or tailored version]">
+  <meta property="og:image"       content="https://www.broodhillsglobal.com/images/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:site_name"   content="BroodhillsGlobal">
+  <meta property="og:locale"      content="en_GB">
+
+  <!-- ═══════════════════════════════════════════════════
+    SEO: Twitter Cards
+  ════════════════════════════════════════════════════ -->
+  <meta name="twitter:card"        content="summary_large_image">
+  <meta name="twitter:site"        content="@broodhillsglobal">
+  <meta name="twitter:title"       content="BroodhillsGlobal — [Page Title]">
+  <meta name="twitter:description" content="[Description]">
+  <meta name="twitter:image"       content="https://www.broodhillsglobal.com/images/og-image.jpg">
+
+  <!-- ═══════════════════════════════════════════════════
+    SEO: Structured Data (JSON-LD)
+  ════════════════════════════════════════════════════ -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "BroodhillsGlobal",
+    "url": "https://www.broodhillsglobal.com",
+    "logo": "https://www.broodhillsglobal.com/images/logo.png",
+    "sameAs": [
+      "https://www.linkedin.com/company/broodhillsglobal",
+      "https://twitter.com/broodhillsglobal"
+    ],
+    "contactPoint": {
+      "@type": "ContactPoint",
+      "telephone": "+44-[number]",
+      "contactType": "customer service",
+      "availableLanguage": "English"
+    }
+  }
+  </script>
+
+  <!-- ═══════════════════════════════════════════════════
+    PERFORMANCE: Inline Critical CSS
+    (Extract critical CSS with `critical` npm package)
+  ════════════════════════════════════════════════════ -->
+  <style>
+    /* CRITICAL CSS — above-the-fold styles only */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { font-size: 16px; scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+      line-height: 1.6;
+      color: #1a1a2e;
+      background: #fff;
+    }
+    /* Prevent layout shift from fonts */
+    @font-face {
+      font-family: 'BrandFont';
+      src: url('/fonts/brand-font-subset.woff2') format('woff2');
+      font-display: swap; /* Use swap to avoid invisible text */
+      unicode-range: U+0000-00FF; /* Latin subset only */
+    }
+    /* Hero / LCP element — ensure it has explicit dimensions */
+    .hero-image {
+      width: 100%;
+      aspect-ratio: 16/9;
+      object-fit: cover;
+    }
+    /* Prevent Cumulative Layout Shift (CLS) for common elements */
+    img, video { max-width: 100%; height: auto; }
+    img { display: block; }
+  </style>
+
+  <!-- ═══════════════════════════════════════════════════
+    PERFORMANCE: Load non-critical CSS asynchronously
+  ════════════════════════════════════════════════════ -->
+  <link rel="preload" as="style" href="/css/main.css"
+        onload="this.onload=null;this.rel='stylesheet'">
+  <noscript><link rel="stylesheet" href="/css/main.css"></noscript>
+
+  <!-- Fonts — subset + display:swap already in @font-face above -->
+  <!-- Use font-display:swap in font CSS too -->
+
+  <!-- ═══════════════════════════════════════════════════
+    GDPR: Google Consent Mode defaults (BEFORE GA loads)
+  ════════════════════════════════════════════════════ -->
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    // Default: all consent denied until user consents
+    gtag('consent', 'default', {
+      analytics_storage: 'denied',
+      ad_storage: 'denied',
+      ad_user_data: 'denied',
+      ad_personalization: 'denied',
+      wait_for_update: 500,
+    });
+  </script>
+
+  <!-- ═══════════════════════════════════════════════════
+    FAVICON & PWA
+  ════════════════════════════════════════════════════ -->
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <meta name="theme-color" content="#0f1117">
+
+  <!-- ═══════════════════════════════════════════════════
+    PERFORMANCE: Analytics — load after page is interactive
+    (The cookie consent banner will update consent before these fire)
+  ════════════════════════════════════════════════════ -->
+</head>
+<body>
+
+  <!-- ACCESSIBILITY: Skip navigation link -->
+  <a href="#main-content" class="skip-link"
+     style="position:absolute;top:-40px;left:0;background:#4f7cff;color:#fff;padding:8px;text-decoration:none;z-index:100000;border-radius:0 0 4px 0;transition:top 0.2s"
+     onfocus="this.style.top='0'" onblur="this.style.top='-40px'">
+    Skip to main content
+  </a>
+
+  <header role="banner">
+    <!-- Navigation — ensure all links have descriptive text (no "click here") -->
+    <nav role="navigation" aria-label="Primary navigation">
+      <!-- Logo with alt text -->
+      <a href="/" aria-label="BroodhillsGlobal home">
+        <img src="/images/logo.svg" alt="BroodhillsGlobal" width="180" height="40">
+      </a>
+      <!-- Nav links -->
+    </nav>
+  </header>
+
+  <main id="main-content" role="main" tabindex="-1">
+
+    <!-- LCP Element: Hero image with explicit dimensions + fetchpriority -->
+    <section aria-labelledby="hero-heading">
+      <h1 id="hero-heading">Your page headline here</h1>
+      <img src="/images/hero.webp"
+           srcset="/images/hero-480.webp 480w, /images/hero-960.webp 960w, /images/hero-1440.webp 1440w"
+           sizes="100vw"
+           width="1440" height="810"
+           alt="[Descriptive alt text for the hero image]"
+           fetchpriority="high"
+           decoding="async"
+           class="hero-image">
+    </section>
+
+    <!-- Page content -->
+
+  </main>
+
+  <footer role="contentinfo">
+    <!-- Footer content -->
+    <p>© 2024 BroodhillsGlobal. All rights reserved.</p>
+    <nav aria-label="Footer navigation">
+      <a href="/privacy-policy">Privacy Policy</a>
+      <a href="/cookie-policy">Cookie Policy</a>
+      <a href="/terms">Terms of Service</a>
+    </nav>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════════════
+    GDPR Cookie Consent Banner (load last, non-blocking)
+  ════════════════════════════════════════════════════ -->
+  <script src="/js/cookie-consent.js" defer></script>
+
+  <!-- ═══════════════════════════════════════════════════
+    Google Tag Manager (loads after consent)
+    Uncomment and add your GTM-XXXXXXX ID:
+  ════════════════════════════════════════════════════ -->
+  <!--
+  <script>
+    window.addEventListener('bh:consentUpdated', function() {
+      // GTM loads after user consents
+      (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+      })(window,document,'script','dataLayer','GTM-XXXXXXX');
+    }, { once: true });
+  </script>
+  -->
+
+  <!-- ═══════════════════════════════════════════════════
+    PERFORMANCE: Main JS bundle (defer = non-blocking)
+  ════════════════════════════════════════════════════ -->
+  <script src="/js/main.js" defer></script>
+
+</body>
+</html>

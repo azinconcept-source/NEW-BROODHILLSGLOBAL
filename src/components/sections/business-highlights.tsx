@@ -56,24 +56,23 @@ const BusinessHighlights = () => {
   ];
 
   return (
-    <section className="bg-[#000000] py-[80px] w-full overflow-hidden highlight-component" data-component="BusinessHighlights">
-      <div className="container mx-auto px-8 max-w-[1400px]">
+    <section className="bg-[#000000] py-6 sm:py-12 lg:py-[80px] w-full overflow-hidden highlight-component" data-component="BusinessHighlights">
+      <div className="container mx-auto px-3 sm:px-8 max-w-[1400px]">
         {/* Section Heading */}
-        <h2 className="text-[32px] font-bold text-white mb-8 tracking-tight">
+        <h2 className="text-[14px] sm:text-[22px] lg:text-[32px] font-bold text-white mb-3 sm:mb-6 tracking-tight">
           Business highlights
         </h2>
 
         {/* Filters */}
-        <div className="flex flex-wrap gap-4 mb-8">
+        <div className="flex flex-wrap gap-2 mb-4 sm:mb-8">
           {filters.map((filter, index) => (
             <button
               key={index}
-              className={`flex items-center gap-2 px-6 py-2.5 rounded-full border border-[#6B8C14]/30 transition-colors hover:border-[#6B8C14] text-sm font-semibold ${
-                filter.active ? 'bg-[#6B8C14]/10 border-[#6B8C14]' : ''
-              }`}
+              className={`flex items-center gap-1 px-3 sm:px-6 py-1 sm:py-2.5 rounded-full border border-[#6B8C14]/30 transition-colors hover:border-[#6B8C14] text-[10px] sm:text-sm font-semibold ${filter.active ? 'bg-[#6B8C14]/10 border-[#6B8C14]' : ''
+                }`}
             >
               <span className="text-white">{filter.name}</span>
-              <ChevronRight className="w-4 h-4 text-[#C8DC0A]" strokeWidth={3} />
+              <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4 text-[#C8DC0A]" strokeWidth={3} />
             </button>
           ))}
         </div>
@@ -83,25 +82,25 @@ const BusinessHighlights = () => {
           {highlights.map((item) => (
             <div
               key={item.id}
-              className={`relative overflow-hidden group cursor-pointer rounded-[16px] hover-lift ${item.span} ${item.height}`}
+              className={`relative overflow-hidden group cursor-pointer rounded-[10px] sm:rounded-[16px] hover-lift ${item.span} h-[150px] sm:h-[260px] md:${item.height}`}
             >
               {/* Background Image */}
-              <div 
+              <div
                 className="absolute inset-0 w-full h-full bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
                 style={{ backgroundImage: `url(${item.image})` }}
                 role="img"
                 aria-label={item.title}
               />
-              
+
               {/* Overlay Gradient */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
 
               {/* Content Overlay */}
-              <div className="absolute inset-0 p-8 flex flex-col justify-end items-start transition-opacity group-hover:bg-[#C8DC0A]/5">
-                <span className="bg-[#C8DC0A] text-[#000000] text-[10px] font-bold px-2 py-0.5 mb-3 tracking-wider uppercase rounded-sm">
+              <div className="absolute inset-0 p-3 sm:p-8 flex flex-col justify-end items-start transition-opacity group-hover:bg-[#C8DC0A]/5">
+                <span className="bg-[#C8DC0A] text-[#000000] text-[8px] sm:text-[10px] font-bold px-1.5 py-0.5 mb-1.5 sm:mb-3 tracking-wider uppercase rounded-sm">
                   {item.tag}
                 </span>
-                <h3 className="text-white text-[20px] font-semibold leading-tight max-w-[500px]">
+                <h3 className="text-white text-[11px] sm:text-[16px] md:text-[20px] font-semibold leading-tight max-w-[500px]">
                   {item.title}
                 </h3>
               </div>
@@ -109,7 +108,7 @@ const BusinessHighlights = () => {
           ))}
         </div>
       </div>
-      
+
       <style jsx global>{`
         .hover-lift {
           transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.3s ease;

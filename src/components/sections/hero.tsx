@@ -57,7 +57,7 @@ export default function HeroSection() {
   }, [isPlaying]);
 
   return (
-    <section className="relative w-full h-[600px] lg:h-[720px] overflow-hidden bg-[#000000] highlight-component" data-component="HeroSection">
+    <section className="relative w-full h-[300px] sm:h-[460px] lg:h-[720px] overflow-hidden bg-[#000000] highlight-component" data-component="HeroSection">
       {/* Background Images with AnimatePresence */}
       <div className="absolute inset-0">
         <AnimatePresence mode="wait">
@@ -82,7 +82,7 @@ export default function HeroSection() {
       </div>
 
       {/* Content Container with Slide Animation */}
-      <div className="relative z-20 container mx-auto h-full flex flex-col justify-center px-6 lg:px-12 pt-16">
+      <div className="relative z-20 container mx-auto h-full flex flex-col justify-center px-3 sm:px-6 lg:px-12 pt-8 sm:pt-16">
         <div className="max-w-[850px]">
           <AnimatePresence mode="wait">
             <motion.div
@@ -92,20 +92,20 @@ export default function HeroSection() {
               exit={{ x: 100, opacity: 0 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
             >
-              <h1 className="text-white text-[36px] md:text-[64px] font-bold leading-[1.05] mb-6 tracking-tight">
+              <h1 className="text-white text-[18px] sm:text-[36px] md:text-[64px] font-bold leading-[1.05] mb-2 sm:mb-6 tracking-tight">
                 {FEATURES[activeSlide].label}
               </h1>
-              <p className="text-[#CCCCCC] text-[18px] md:text-[22px] font-medium leading-[1.5] mb-10 max-w-[750px] whitespace-pre-line drop-shadow-md">
+              <p className="text-[#CCCCCC] text-[11px] sm:text-[15px] md:text-[22px] font-medium leading-[1.4] mb-3 sm:mb-8 max-w-[750px] whitespace-pre-line drop-shadow-md line-clamp-2 sm:line-clamp-none">
                 {FEATURES[activeSlide].description}
               </p>
               <a
                 href="#"
-                className="inline-flex items-center justify-center bg-[#C8DC0A] text-[#000000] font-bold text-[14px] tracking-[0.2em] px-12 py-[18px] rounded-full hover:bg-[#6B8C14] hover:text-white transition-all duration-300 uppercase shadow-xl hover:shadow-[#C8DC0A]/30 group"
+                className="inline-flex items-center justify-center bg-[#C8DC0A] text-[#000000] font-bold text-[10px] sm:text-[13px] tracking-[0.1em] sm:tracking-[0.2em] px-4 sm:px-10 py-[8px] sm:py-[16px] rounded-full hover:bg-[#6B8C14] hover:text-white transition-all duration-300 uppercase shadow-xl hover:shadow-[#C8DC0A]/30 group"
               >
                 {FEATURES[activeSlide].button}
-                <motion.span 
-                  className="ml-2"
-                  animate={{ x: [0, 5, 0] }}
+                <motion.span
+                  className="ml-1"
+                  animate={{ x: [0, 4, 0] }}
                   transition={{ repeat: Infinity, duration: 1.5 }}
                 >
                   →
@@ -117,8 +117,8 @@ export default function HeroSection() {
       </div>
 
       {/* Timeline Navigation */}
-      <div className="absolute bottom-12 left-0 right-0 z-30 px-6 container mx-auto">
-        <div className="flex items-end justify-between border-t border-[#6B8C14]/40 pt-8 relative">
+      <div className="absolute bottom-2 sm:bottom-10 left-0 right-0 z-30 px-3 sm:px-6 container mx-auto">
+        <div className="flex items-end justify-between border-t border-[#6B8C14]/40 pt-3 sm:pt-8 relative">
           {/* Progress Bars and Labels */}
           <div className="flex-1 overflow-x-auto no-scrollbar pb-2">
             <div className="flex gap-6 min-w-max pr-12">
@@ -126,20 +126,20 @@ export default function HeroSection() {
                 <button
                   key={index}
                   onClick={() => setActiveSlide(index)}
-                  className="relative text-left group transition-all duration-300 outline-none w-[160px]"
+                  className="relative text-left group transition-all duration-300 outline-none w-[60px] sm:w-[160px]"
                 >
                   {/* Active Indicator Bar */}
                   <div className="absolute top-[-33px] left-0 w-full h-[4px] bg-[#6B8C14]/10 rounded-full">
-                    <motion.div 
+                    <motion.div
                       className="h-full bg-[#C8DC0A] rounded-full"
                       initial={false}
                       animate={{ width: index === activeSlide ? "100%" : "0%" }}
                       transition={{ duration: 0.4 }}
                     />
                   </div>
-                  
+
                   {/* Dot */}
-                  <div 
+                  <div
                     className={cn(
                       "absolute top-[-34px] left-0 w-[8px] h-[8px] rounded-full border-2 transition-all duration-300",
                       index === activeSlide ? "bg-[#C8DC0A] border-[#C8DC0A] scale-150 shadow-[0_0_10px_#C8DC0A]" : "bg-transparent border-[#6B8C14]/50"
@@ -147,9 +147,9 @@ export default function HeroSection() {
                   />
 
                   {/* Text Label */}
-                  <span 
+                  <span
                     className={cn(
-                      "block text-[10px] leading-[1.3] pt-4 transition-colors font-black uppercase tracking-widest",
+                      "hidden sm:block text-[10px] leading-[1.3] pt-4 transition-colors font-black uppercase tracking-widest",
                       index === activeSlide ? "text-[#C8DC0A]" : "text-[#CCCCCC] opacity-40 group-hover:opacity-100 group-hover:text-white"
                     )}
                   >
@@ -161,18 +161,18 @@ export default function HeroSection() {
           </div>
 
           {/* Controls */}
-          <div className="flex items-center gap-4 ml-8 pb-[6px]">
+          <div className="flex items-center gap-2 ml-2 sm:ml-8 pb-[6px]">
             <button
               onClick={() => setIsPlaying(!isPlaying)}
               aria-label={isPlaying ? "Pause carousel" : "Play carousel"}
-              className="w-10 h-10 flex items-center justify-center rounded-full border border-[#6B8C14]/40 text-white hover:bg-[#C8DC0A] hover:text-black transition-all duration-300"
+              className="w-7 h-7 sm:w-10 sm:h-10 flex items-center justify-center rounded-full border border-[#6B8C14]/40 text-white hover:bg-[#C8DC0A] hover:text-black transition-all duration-300"
             >
               {isPlaying ? <Pause size={18} fill="currentColor" /> : <Play size={18} fill="currentColor" />}
             </button>
           </div>
         </div>
       </div>
-      
+
       <style jsx>{`
         .no-scrollbar::-webkit-scrollbar {
           display: none;

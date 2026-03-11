@@ -18,9 +18,9 @@ interface InfoCardProps {
   bgColor: string;
 }
 
-const SharedPageContent = ({ title, description, image, sections, infoCards, children }: { 
-  title: string; 
-  description: string; 
+const SharedPageContent = ({ title, description, image, sections, infoCards, children }: {
+  title: string;
+  description: string;
   image: string;
   sections?: SectionProps[];
   infoCards?: InfoCardProps[];
@@ -29,7 +29,7 @@ const SharedPageContent = ({ title, description, image, sections, infoCards, chi
   return (
     <div className="min-h-screen bg-[#000000] text-white">
       {/* Hero Section */}
-      <section className="relative h-[70vh] flex items-center overflow-hidden">
+      <section className="relative h-[40vh] sm:h-[55vh] lg:h-[70vh] flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
           <motion.div
             initial={{ scale: 1.1 }}
@@ -51,10 +51,10 @@ const SharedPageContent = ({ title, description, image, sections, infoCards, chi
             transition={{ duration: 0.8, ease: "easeOut" }}
             className="max-w-2xl"
           >
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 tracking-tight text-[#C8DC0A]">
+            <h1 className="text-[20px] sm:text-[36px] lg:text-[72px] font-bold mb-2 sm:mb-5 tracking-tight text-[#C8DC0A]">
               {title}
             </h1>
-            <p className="text-xl md:text-2xl text-gray-300 leading-relaxed">
+            <p className="text-[11px] sm:text-[16px] md:text-[22px] text-gray-300 leading-relaxed">
               {description}
             </p>
           </motion.div>
@@ -73,10 +73,10 @@ const SharedPageContent = ({ title, description, image, sections, infoCards, chi
                     whileInView={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.6, delay: idx * 0.1 }}
                     viewport={{ once: true }}
-                    className="rounded-[32px] p-12 min-h-[280px] flex flex-col justify-between group cursor-pointer transition-transform hover:scale-[1.02]"
+                    className="rounded-[16px] sm:rounded-[32px] p-4 sm:p-12 min-h-[160px] sm:min-h-[280px] flex flex-col justify-between group cursor-pointer transition-transform hover:scale-[1.02]"
                     style={{ backgroundColor: card.bgColor }}
                   >
-                    <h2 className="text-4xl md:text-5xl font-bold leading-tight max-w-md">
+                    <h2 className="text-[16px] sm:text-[28px] md:text-[40px] font-bold leading-tight max-w-md">
                       {card.title}
                     </h2>
                     <div className="flex items-center text-lg font-medium tracking-wide">
@@ -100,7 +100,7 @@ const SharedPageContent = ({ title, description, image, sections, infoCards, chi
 
       {/* Content Sections */}
       {sections && (
-        <section className="py-24 bg-[#000000]">
+        <section className="py-6 sm:py-16 lg:py-24 bg-[#000000]">
           <div className="container mx-auto px-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-16">
               {sections.map((section, idx) => (

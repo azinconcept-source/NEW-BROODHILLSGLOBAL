@@ -1,0 +1,26 @@
+{
+    "resourceSizes": [
+        {
+            "resourceType": "total",
+            "budget": 500
+        }
+    ],
+    "scores": [
+        {
+            "audits": "performance",
+            "minScore": 0.9
+        },
+        {
+            "audits": "accessibility",
+            "minScore": 0.9
+        },
+        {
+            "audits": "best-practices",
+            "minScore": 0.9
+        },
+        {
+            "audits": "seo",
+            "minScore": 0.9
+        }
+    ]
+}

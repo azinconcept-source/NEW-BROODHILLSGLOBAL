@@ -32,11 +32,11 @@ const pressReleases: PressRelease[] = [
 
 const PressReleases = () => {
   return (
-    <section className="bg-[#000000] py-[80px] highlight-component" data-component="PressReleases">
-      <div className="container mx-auto px-8 max-w-[1400px]">
+    <section className="bg-[#000000] py-6 sm:py-12 lg:py-[80px] highlight-component" data-component="PressReleases">
+      <div className="container mx-auto px-3 sm:px-8 max-w-[1400px]">
         {/* Header Section */}
         <div className="flex items-center justify-between mb-8">
-          <h2 className="text-[#FFFFFF] text-[32px] font-semibold leading-[1.2] tracking-[-0.02em]">
+          <h2 className="text-[#FFFFFF] text-[14px] sm:text-[22px] lg:text-[32px] font-semibold leading-[1.2] tracking-[-0.02em]">
             Press releases
           </h2>
           <a
@@ -61,13 +61,13 @@ const PressReleases = () => {
               <a
                 key={index}
                 href={release.link}
-                className="group block bg-[#000000] border border-[#6B8C14]/30 p-6 rounded-[4px] min-h-[180px] hover:bg-[#121212] transition-colors flex flex-col justify-between"
+                className="group block bg-[#000000] border border-[#6B8C14]/30 p-2 sm:p-6 rounded-[4px] min-h-[120px] sm:min-h-[180px] hover:bg-[#121212] transition-colors flex flex-col justify-between"
               >
                 <div>
-                  <p className="text-[#CCCCCC] text-[12px] font-semibold uppercase tracking-[0.05em] mb-4">
+                  <p className="text-[#CCCCCC] text-[9px] sm:text-[11px] font-semibold uppercase tracking-[0.05em] mb-2 sm:mb-4">
                     {release.date}
                   </p>
-                  <h3 className="text-[#FFFFFF] text-[18px] font-semibold leading-[1.4] line-clamp-4 group-hover:text-[#6B8C14] transition-colors">
+                  <h3 className="text-[#FFFFFF] text-[12px] sm:text-[16px] font-semibold leading-[1.4] line-clamp-4 group-hover:text-[#6B8C14] transition-colors">
                     {release.title}
                   </h3>
                 </div>

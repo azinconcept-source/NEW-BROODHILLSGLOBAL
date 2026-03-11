@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useId } from "react";
-import { X } from "lucide-react";
+import { X, CheckCircle, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,11 +10,16 @@ import {
   ExpandableScreenContent,
   ExpandableScreenTrigger,
 } from "@/components/ui/expandable-screen";
+import { supabase } from "@/lib/supabase";
 
 const StickyNotifications = () => {
-  const [showCookieBanner, setShowCookieBanner] = useState(true);
   const [showAiPopup, setShowAiPopup] = useState(true);
-  const [showMarketUpdate, setShowMarketUpdate] = useState(true);
+
+  // Waitlist form state
+  const [formData, setFormData] = useState({ name: "", company: "", email: "" });
+  const [submitting, setSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const nameId = useId();
   const companyId = useId();
@@ -29,8 +34,25 @@ const StickyNotifications = () => {
     e.stopPropagation();
     setShowAiPopup(false);
   };
-  const closeCookieBanner = () => setShowCookieBanner(false);
-  const closeMarketUpdate = () => setShowMarketUpdate(false);
+
+  async function handleWaitlistSubmit(e: React.FormEvent) {
+    e.preventDefault();
+    if (!formData.name.trim() || !formData.company.trim() || !formData.email.trim()) return;
+    setSubmitting(true);
+    setSubmitError(null);
+    const { error } = await supabase.from("waitlist_submissions").insert({
+      name: formData.name.trim(),
+      company: formData.company.trim(),
+      email: formData.email.trim(),
+    });
+    setSubmitting(false);
+    if (error) {
+      setSubmitError("Failed to submit. Please try again.");
+    } else {
+      setSubmitSuccess(true);
+      setFormData({ name: "", company: "", email: "" });
+    }
+  }
 
   return (
     <>
@@ -40,26 +62,26 @@ const StickyNotifications = () => {
           layoutId="waitlist-card"
           className="fixed z-[1000] top-[140px] right-[40px] w-[350px]"
         >
-          <div 
+          <div
             className="bg-[#121212] border border-[#6B8C14]/30 rounded-[16px] shadow-[0_8px_24px_rgba(0,0,0,0.5)] p-6 animate-in fade-in slide-in-from-right-4 duration-500 relative group"
             style={{ fontFamily: "Inter, sans-serif" }}
           >
-            <button 
+            <button
               onClick={closeAiPopup}
               className="absolute top-4 right-4 p-1 hover:bg-white/10 rounded-full transition-colors z-10 opacity-0 group-hover:opacity-100 transition-opacity"
             >
               <X className="w-4 h-4 text-white" />
             </button>
-            
+
             <h3 className="text-white text-[18px] font-bold leading-[1.3] pr-6 mb-2">
               The Energy Marketplace Is Being Rebuilt.
             </h3>
             <p className="text-white/80 text-[13px] leading-[1.5] mb-6 opacity-90">
               Versoil is bringing structured deal execution, live cargo visibility, and institutional-grade coordination to West African energy transactions.
             </p>
-            
+
             <ExpandableScreenTrigger>
-              <button 
+              <button
                 className="w-full bg-[#C8DC0A] hover:bg-[#6B8C14] text-[#000000] hover:text-white font-bold py-3 rounded-full text-[12px] uppercase tracking-wider transition-colors cursor-pointer"
               >
                 Join the Waitlist →
@@ -100,131 +122,82 @@ const StickyNotifications = () => {
               </div>
 
               <div className="flex-1 w-full bg-black/40 p-8 rounded-2xl border border-white/5">
-                <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
-                  <div>
-                    <Label htmlFor={nameId} className="block text-[10px] font-mono font-medium text-[#C8DC0A] mb-2 tracking-[1px] uppercase">
-                      FULL NAME *
-                    </Label>
-                    <Input
-                      type="text"
-                      id={nameId}
-                      name="name"
-                      placeholder="John Doe"
-                      required
-                      className="w-full px-4 py-3 rounded-lg bg-white/5 border-white/10 text-white placeholder:text-white/20 focus:border-[#C8DC0A]/50 focus:ring-0 transition-all text-sm h-12"
-                    />
+                {submitSuccess ? (
+                  <div className="flex flex-col items-center justify-center gap-4 py-12 text-center">
+                    <CheckCircle className="w-14 h-14 text-[#C8DC0A]" />
+                    <h3 className="text-white text-2xl font-bold">You&apos;re on the list!</h3>
+                    <p className="text-white/60 text-sm max-w-xs">
+                      We&apos;ve received your submission. We&apos;ll be in touch when Versoil opens access.
+                    </p>
                   </div>
+                ) : (
+                  <form className="space-y-5" onSubmit={handleWaitlistSubmit}>
+                    <div>
+                      <Label htmlFor={nameId} className="block text-[10px] font-mono font-medium text-[#C8DC0A] mb-2 tracking-[1px] uppercase">
+                        FULL NAME *
+                      </Label>
+                      <Input
+                        type="text"
+                        id={nameId}
+                        name="name"
+                        placeholder="John Doe"
+                        required
+                        value={formData.name}
+                        onChange={(e) => setFormData(f => ({ ...f, name: e.target.value }))}
+                        className="w-full px-4 py-3 rounded-lg bg-white/5 border-white/10 text-white placeholder:text-white/20 focus:border-[#C8DC0A]/50 focus:ring-0 transition-all text-sm h-12"
+                      />
+                    </div>
 
-                  <div>
-                    <Label htmlFor={companyId} className="block text-[10px] font-mono font-medium text-[#C8DC0A] mb-2 tracking-[1px] uppercase">
-                      COMPANY *
-                    </Label>
-                    <Input
-                      type="text"
-                      id={companyId}
-                      name="company"
-                      placeholder="Energy Corp"
-                      required
-                      className="w-full px-4 py-3 rounded-lg bg-white/5 border-white/10 text-white placeholder:text-white/20 focus:border-[#C8DC0A]/50 focus:ring-0 transition-all text-sm h-12"
-                    />
-                  </div>
+                    <div>
+                      <Label htmlFor={companyId} className="block text-[10px] font-mono font-medium text-[#C8DC0A] mb-2 tracking-[1px] uppercase">
+                        COMPANY *
+                      </Label>
+                      <Input
+                        type="text"
+                        id={companyId}
+                        name="company"
+                        placeholder="Energy Corp"
+                        required
+                        value={formData.company}
+                        onChange={(e) => setFormData(f => ({ ...f, company: e.target.value }))}
+                        className="w-full px-4 py-3 rounded-lg bg-white/5 border-white/10 text-white placeholder:text-white/20 focus:border-[#C8DC0A]/50 focus:ring-0 transition-all text-sm h-12"
+                      />
+                    </div>
 
-                  <div>
-                    <Label htmlFor={emailId} className="block text-[10px] font-mono font-medium text-[#C8DC0A] mb-2 tracking-[1px] uppercase">
-                      EMAIL *
-                    </Label>
-                    <Input
-                      type="email"
-                      id={emailId}
-                      name="email"
-                      placeholder="john@example.com"
-                      required
-                      className="w-full px-4 py-3 rounded-lg bg-white/5 border-white/10 text-white placeholder:text-white/20 focus:border-[#C8DC0A]/50 focus:ring-0 transition-all text-sm h-12"
-                    />
-                  </div>
+                    <div>
+                      <Label htmlFor={emailId} className="block text-[10px] font-mono font-medium text-[#C8DC0A] mb-2 tracking-[1px] uppercase">
+                        EMAIL *
+                      </Label>
+                      <Input
+                        type="email"
+                        id={emailId}
+                        name="email"
+                        placeholder="john@example.com"
+                        required
+                        value={formData.email}
+                        onChange={(e) => setFormData(f => ({ ...f, email: e.target.value }))}
+                        className="w-full px-4 py-3 rounded-lg bg-white/5 border-white/10 text-white placeholder:text-white/20 focus:border-[#C8DC0A]/50 focus:ring-0 transition-all text-sm h-12"
+                      />
+                    </div>
 
-                  <Button
-                    type="submit"
-                    className="w-full px-8 py-6 rounded-full bg-[#C8DC0A] text-black font-bold hover:bg-[#6B8C14] hover:text-white transition-all tracking-tight text-base mt-4"
-                  >
-                    Join the Waitlist →
-                  </Button>
-                </form>
+                    {submitError && (
+                      <p className="text-red-400 text-sm">{submitError}</p>
+                    )}
+
+                    <Button
+                      type="submit"
+                      disabled={submitting}
+                      className="w-full px-8 py-6 rounded-full bg-[#C8DC0A] text-black font-bold hover:bg-[#6B8C14] hover:text-white transition-all tracking-tight text-base mt-4 flex items-center justify-center gap-2"
+                    >
+                      {submitting ? <Loader2 className="w-4 h-4 animate-spin" /> : null}
+                      {submitting ? "Submitting..." : "Join the Waitlist →"}
+                    </Button>
+                  </form>
+                )}
               </div>
             </div>
           </ExpandableScreenContent>
         </ExpandableScreen>
-      )}
-
-      {/* Cookie Consent Banner */}
-      {showCookieBanner && (
-        <div className="fixed bottom-0 left-0 right-0 z-[1050] bg-[#121212] text-white border-t border-[#6B8C14]/30 shadow-[0_-4px_20px_rgba(0,0,0,0.5)] transform translate-y-0 transition-transform duration-500">
-          <div className="max-w-[1400px] mx-auto px-6 py-8 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div className="flex-1">
-              <h4 className="text-[32px] font-bold leading-tight mb-2">
-                This website uses cookies
-              </h4>
-              <p className="text-[14px] leading-relaxed max-w-[900px] text-white/80">
-                This website uses cookies to show you adverts and offer you services customised according to the preferences you have shown while browsing online. For further information please refer to our <a href="#" className="underline font-semibold hover:text-[#C8DC0A]">Cookie Policy</a>.
-              </p>
-            </div>
-            
-            <div className="flex items-center gap-4">
-              <button 
-                onClick={closeCookieBanner}
-                className="bg-[#C8DC0A] hover:bg-[#6B8C14] text-[#000000] hover:text-white font-bold px-12 py-3 rounded-full text-[14px] transition-colors whitespace-nowrap"
-              >
-                ACCEPT
-              </button>
-              <button 
-                onClick={closeCookieBanner}
-                className="p-2 hover:bg-white/10 rounded-full transition-colors"
-              >
-                <X className="w-6 h-6 text-white/50" />
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* 2026 Capital Markets Update Sticky Bar */}
-      {showMarketUpdate && !showCookieBanner && (
-        <div className="fixed bottom-0 left-0 right-0 z-[999] bg-[#121212] border-t border-[#6B8C14]/30 shadow-[0_-2px_10px_rgba(0,0,0,0.5)] h-[100px]">
-          <div className="flex h-full w-full">
-            {/* Left Section */}
-            <div className="flex-1 flex items-center px-10">
-              <div className="flex flex-col">
-                <h5 className="text-white text-[20px] font-bold mb-1">
-                  2026 Capital Markets Update
-                </h5>
-                <div className="flex items-center gap-2">
-                  <img 
-                    src="https://slelguoygbfzlpylpxfs.supabase.co/storage/v1/object/public/test-clones/1a2f4cae-140e-4892-89b2-df10cbfa01ea-eni-com/assets/svgs/Calendar_empty_black-7.svg"
-                    alt="Calendar"
-                    className="w-4 h-4 invert"
-                  />
-                  <span className="text-white/80 text-[14px]">19/03/2026</span>
-                </div>
-              </div>
-            </div>
-
-            {/* Right Section - Black */}
-            <div className="w-[35%] bg-[#000000] flex items-center justify-center px-10 relative border-l border-[#6B8C14]/30">
-              <a 
-                href="#"
-                className="bg-[#C8DC0A] hover:bg-[#6B8C14] text-[#000000] hover:text-white font-bold px-8 py-3 rounded-full text-[12px] uppercase tracking-wide transition-colors"
-              >
-                Go to the calendar
-              </a>
-              <button 
-                onClick={closeMarketUpdate}
-                className="absolute right-8 p-1 hover:bg-white/10 rounded-full transition-colors"
-              >
-                <X className="w-5 h-5 text-white" />
-              </button>
-            </div>
-          </div>
-        </div>
       )}
 
       <style jsx global>{`
