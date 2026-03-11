@@ -3,7 +3,8 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { supabase, type Post } from "@/lib/supabase";
+import { createBrowserSupabaseClient, type Post } from "@/lib/supabase";
+import { useAuth } from "@clerk/nextjs";
 import { Clock, ArrowRight, Signal } from "lucide-react";
 
 const PRIORITY_COLORS: Record<string, string> = {
@@ -25,8 +26,10 @@ function PriorityBadge({ priority }: { priority: string }) {
 export default function BlogIndexPage() {
     const [posts, setPosts] = useState<Post[]>([]);
     const [loading, setLoading] = useState(true);
+    const { getToken } = useAuth();
 
     useEffect(() => {
+        const supabase = createBrowserSupabaseClient(getToken);
         supabase
             .from("posts")
             .select("*")

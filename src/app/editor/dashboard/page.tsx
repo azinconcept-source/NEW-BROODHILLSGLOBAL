@@ -9,7 +9,8 @@ import {
     Signal, Save, AlertTriangle, Users, Mail,
 } from "lucide-react";
 import Link from "next/link";
-import { supabase, type Post, type Priority, type PostStatus, type WaitlistSubmission } from "@/lib/supabase";
+import { createBrowserSupabaseClient, type Post, type Priority, type PostStatus, type WaitlistSubmission } from "@/lib/supabase";
+import { useAuth, useUser } from "@clerk/nextjs";
 
 const PRIORITIES: Priority[] = ["Global Priority", "National Priority", "Company Priority", "Local Priority"];
 const STATUSES: PostStatus[] = ["Published", "Draft", "Archived"];
@@ -56,6 +57,9 @@ export default function EditorDashboardPage() {
     const [stats, setStats] = useState<Stats>({ posts: 0, views: 0, comments: 0 });
     const [loading, setLoading] = useState(true);
 
+    const { getToken, signOut } = useAuth();
+    const { isLoaded, isSignedIn, user } = useUser();
+
     // Modal state
     const [modal, setModal] = useState<"create" | "edit" | "delete" | null>(null);
     const [form, setForm] = useState<PostForm>(EMPTY_FORM);
@@ -65,6 +69,7 @@ export default function EditorDashboardPage() {
     const [formError, setFormError] = useState<string | null>(null);
 
     const loadData = useCallback(async () => {
+        const supabase = createBrowserSupabaseClient(getToken);
         const [{ data: postsData }, { data: analyticsData }, { data: commentsData }, { data: waitlistData }] = await Promise.all([
             supabase.from("posts").select("*").order("created_at", { ascending: false }),
             supabase.from("post_analytics").select("views"),
@@ -83,21 +88,18 @@ export default function EditorDashboardPage() {
     }, []);
 
     useEffect(() => {
-        async function init() {
-            const { data: { session } } = await supabase.auth.getSession();
-            if (!session) {
+        if (isLoaded) {
+            if (!isSignedIn) {
                 router.push("/editor/login");
-                return;
+            } else {
+                setUserEmail(user?.primaryEmailAddress?.emailAddress ?? null);
+                loadData().then(() => setLoading(false));
             }
-            setUserEmail(session.user.email ?? null);
-            await loadData();
-            setLoading(false);
         }
-        init();
-    }, [router, loadData]);
+    }, [isLoaded, isSignedIn, router, loadData, user]);
 
     async function handleLogout() {
-        await supabase.auth.signOut();
+        await signOut();
         router.push("/editor/login");
     }
 
@@ -135,6 +137,7 @@ export default function EditorDashboardPage() {
     async function confirmDelete() {
         if (!deletePost) return;
         setSaving(true);
+        const supabase = createBrowserSupabaseClient(getToken);
         await supabase.from("posts").delete().eq("id", deletePost.id);
         await loadData();
         setSaving(false);
@@ -154,6 +157,8 @@ export default function EditorDashboardPage() {
             published_at: form.status === "Published" ? new Date().toISOString() : null,
             author_email: userEmail,
         };
+
+        const supabase = createBrowserSupabaseClient(getToken);
 
         let error;
         if (modal === "create") {

@@ -1,9 +1,58 @@
 import { createClient } from "@supabase/supabase-js";
+import { auth } from '@clerk/nextjs/server';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!;
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const createServerSupabaseClient = () => {
+    return createClient(
+        supabaseUrl,
+        supabaseAnonKey,
+        {
+            global: {
+                async fetch(url, options = {}) {
+                    const clerkToken = await (await auth()).getToken({ template: 'supabase' });
+
+                    const headers = new Headers(options?.headers);
+                    if (clerkToken) {
+                        headers.set('Authorization', `Bearer ${clerkToken}`);
+                    }
+
+                    return fetch(url, {
+                        ...options,
+                        headers,
+                    });
+                },
+            },
+        }
+    );
+};
+
+export const createBrowserSupabaseClient = (getToken: () => Promise<string | null>) => {
+    return createClient(
+        supabaseUrl,
+        supabaseAnonKey,
+        {
+            global: {
+                async fetch(url, options = {}) {
+                    const clerkToken = await getToken();
+
+                    const headers = new Headers(options?.headers);
+                    if (clerkToken) {
+                        headers.set('Authorization', `Bearer ${clerkToken}`);
+                    }
+
+                    return fetch(url, {
+                        ...options,
+                        headers,
+                    });
+                },
+            },
+        }
+    );
+};
+
+// ... keep existing types below
 
 // ── Types ────────────────────────────────────────────────────
 export type Priority =

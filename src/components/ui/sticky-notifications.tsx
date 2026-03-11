@@ -10,10 +10,13 @@ import {
   ExpandableScreenContent,
   ExpandableScreenTrigger,
 } from "@/components/ui/expandable-screen";
-import { supabase } from "@/lib/supabase";
+import { createBrowserSupabaseClient } from "@/lib/supabase";
+import { useAuth } from "@clerk/nextjs";
 
 const StickyNotifications = () => {
   const [showAiPopup, setShowAiPopup] = useState(true);
+  const { getToken } = useAuth();
+  const supabase = createBrowserSupabaseClient(getToken);
 
   // Waitlist form state
   const [formData, setFormData] = useState({ name: "", company: "", email: "" });

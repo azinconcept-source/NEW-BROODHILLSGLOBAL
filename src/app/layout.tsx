@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ClerkProvider } from '@clerk/nextjs';
 import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
@@ -47,12 +48,14 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#000000]`}
       >
-        <Header />
-        {children}
-        <Footer />
-        <StickyNotifications />
-        <VisualEditsMessenger />
-        <Script src="/js/cookie-consent.js" strategy="lazyOnload" />
+        <ClerkProvider>
+          <Header />
+          {children}
+          <Footer />
+          <StickyNotifications />
+          <VisualEditsMessenger />
+          <Script src="/js/cookie-consent.js" strategy="lazyOnload" />
+        </ClerkProvider>
       </body>
     </html>
   );

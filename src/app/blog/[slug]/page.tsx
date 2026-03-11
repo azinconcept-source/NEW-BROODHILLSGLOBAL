@@ -4,7 +4,8 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams, notFound } from "next/navigation";
 import { motion } from "framer-motion";
-import { supabase, type Post } from "@/lib/supabase";
+import { createBrowserSupabaseClient, type Post } from "@/lib/supabase";
+import { useAuth } from "@clerk/nextjs";
 import { trackView } from "@/app/actions/track-view";
 import CommentsSection from "@/components/ui/comments-section";
 import { Clock, Calendar, ArrowLeft, Share2, ChevronRight, Signal } from "lucide-react";
@@ -21,11 +22,13 @@ export default function BlogPostPage() {
     const [post, setPost] = useState<Post | null>(null);
     const [related, setRelated] = useState<Post[]>([]);
     const [loading, setLoading] = useState(true);
+    const { getToken } = useAuth();
 
     useEffect(() => {
         if (!slug) return;
 
         async function load() {
+            const supabase = createBrowserSupabaseClient(getToken);
             const { data } = await supabase
                 .from("posts")
                 .select("*")
